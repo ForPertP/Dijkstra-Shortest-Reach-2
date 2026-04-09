@@ -18,54 +18,6 @@ vector<string> split(const string &);
 
 vector<int> shortestReach(int n, vector<vector<int>> edges, int s)
 {
-    vector< vector<pair<int, int>> > data(n + 1);
-        
-    for (size_t i = 0; i < edges.size(); ++i)
-    {
-        data[edges[i][0]].push_back({ edges[i][1], edges[i][2] });
-        data[edges[i][1]].push_back({ edges[i][0], edges[i][2] });
-    }
-
-    priority_queue<pair<int, int>> pq;
-    pq.push({ 0, s });
-    
-    vector<int> distance(n + 1, INT_MAX);
-    distance[s] = 0;
-    
-    vector<int> check(n + 1);
-            
-    while (!pq.empty())
-    {
-        int a = pq.top().second;
-        pq.pop();
-
-        if (check[a])
-        {
-            continue;
-        }
-
-        check[a] = 1;
-                
-        for (auto b : data[a])
-        {
-            if (distance[a] + b.second < distance[b.first])
-            {
-                distance[b.first] = distance[a] + b.second;
-                pq.push({ -distance[b.first], b.first });
-            }
-        }
-    }
-    
-    vector<int> result;
-    
-    for (int i = 1; i <= n; ++i)
-    {
-        if (i == s) continue;
-        int val = (distance[i] == INT_MAX) ? -1 : distance[i];
-        result.push_back(val);
-    }    
-
-    return result;
 }
 
 int main()
