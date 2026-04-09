@@ -16,9 +16,6 @@ vector<string> split(const string &);
  *  3. INTEGER s
  */
 
-vector<int> shortestReach(int n, vector<vector<int>> edges, int s)
-{
-}
 
 int main()
 {
