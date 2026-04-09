@@ -16,6 +16,61 @@ vector<string> split(const string &);
  *  3. INTEGER s
  */
 
+vector<int> shortestReach2(int n, vector<vector<int>> edges, int s)
+{
+    vector<vector<pair<int,int>>> adjacencyList(n + 1);
+
+    for (size_t i = 0; i < edges.size(); ++i)
+    {
+        adjacencyList[edges[i][0]].push_back({edges[i][1], edges[i][2]});
+        adjacencyList[edges[i][1]].push_back({edges[i][0], edges[i][2]});
+    }
+
+    priority_queue<pair<int,int>> minHeap;
+    minHeap.push({0, s});
+
+    vector<int> distance(n + 1, INT_MAX);
+    distance[s] = 0;
+
+    vector<int> visited(n + 1);
+
+    while (!minHeap.empty())
+    {
+        int currentNode = minHeap.top().second;
+        minHeap.pop();
+
+        if (visited[currentNode])
+        {
+            continue;
+        }
+
+        visited[currentNode] = 1;
+
+        for (auto nextEdge : adjacencyList[currentNode])
+        {
+            int nextNode = nextEdge.first;
+            int edgeWeight = nextEdge.second;
+
+            if (distance[currentNode] + edgeWeight < distance[nextNode])
+            {
+                distance[nextNode] = distance[currentNode] + edgeWeight;
+                minHeap.push({-distance[nextNode], nextNode});
+            }
+        }
+    }
+
+    vector<int> result;
+
+    for (int i = 1; i <= n; ++i)
+    {
+        if (i == s) continue;
+        int val = (distance[i] == INT_MAX) ? -1 : distance[i];
+        result.push_back(val);
+    }
+
+    return result;
+}
+
 
 int main()
 {
