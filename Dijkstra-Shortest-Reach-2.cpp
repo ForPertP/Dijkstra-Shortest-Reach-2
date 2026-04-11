@@ -16,6 +16,12 @@ vector<string> split(const string &);
  *  3. INTEGER s
  */
 
+vector<int> shortestReach(int n, vector<vector<int>> edges, int s)
+{
+    vector<vector<pair<int,int>>> adjacencyList(n + 1);
+}
+
+
 vector<int> shortestReach2(int n, vector<vector<int>> edges, int s)
 {
     vector<vector<pair<int,int>>> adjacencyList(n + 1);
