@@ -25,7 +25,10 @@ vector<int> shortestReach(int n, vector<vector<int>> edges, int s)
         adjacencyList[edge[0]].push_back({edge[1], edge[2]});
         adjacencyList[edge[1]].push_back({edge[0], edge[2]});
     }
-    
+
+    vector<int> distance(n + 1, numeric_limits<int>::max());
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
+
 }
 
 
