@@ -19,6 +19,13 @@ vector<string> split(const string &);
 vector<int> shortestReach(int n, vector<vector<int>> edges, int s)
 {
     vector<vector<pair<int,int>>> adjacencyList(n + 1);
+
+    for (auto &edge : edges)
+    {
+        adjacencyList[edge[0]].push_back({edge[1], edge[2]});
+        adjacencyList[edge[1]].push_back({edge[0], edge[2]});
+    }
+    
 }
 
 
