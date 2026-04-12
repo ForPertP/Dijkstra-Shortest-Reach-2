@@ -29,6 +29,9 @@ vector<int> shortestReach(int n, vector<vector<int>> edges, int s)
     vector<int> distance(n + 1, numeric_limits<int>::max());
     priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
 
+    distance[s] = 0;
+    pq.push({0, s});
+
 }
 
 
