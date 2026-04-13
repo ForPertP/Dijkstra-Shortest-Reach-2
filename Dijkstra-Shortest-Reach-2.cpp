@@ -32,6 +32,24 @@ vector<int> shortestReach(int n, vector<vector<int>> edges, int s)
     distance[s] = 0;
     pq.push({0, s});
 
+
+    while (!pq.empty())
+    {
+        auto [currentDistance, currentNode] = pq.top();
+        pq.pop();
+
+        if (currentDistance > distance[currentNode]) continue;
+
+        for (const auto& [nextNode, edgeWeight] : adjacencyList[currentNode])
+        {
+            if (distance[nextNode] > distance[currentNode] + edgeWeight)
+            {
+                distance[nextNode] = distance[currentNode] + edgeWeight;
+                pq.push({distance[nextNode], nextNode});
+            }
+        }
+    }
+    
 }
 
 
