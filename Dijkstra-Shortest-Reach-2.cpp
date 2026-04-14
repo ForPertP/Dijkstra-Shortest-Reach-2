@@ -32,7 +32,6 @@ vector<int> shortestReach(int n, vector<vector<int>> edges, int s)
     distance[s] = 0;
     pq.push({0, s});
 
-
     while (!pq.empty())
     {
         auto [currentDistance, currentNode] = pq.top();
@@ -49,7 +48,16 @@ vector<int> shortestReach(int n, vector<vector<int>> edges, int s)
             }
         }
     }
-    
+
+    vector<int> result;
+
+    for (int i = 1; i <= n; ++i)
+    {
+        if (i == s) continue;
+        result.push_back(distance[i] == numeric_limits<int>::max() ? -1 : distance[i]);
+    }
+
+    return result;
 }
 
 
@@ -63,18 +71,18 @@ vector<int> shortestReach2(int n, vector<vector<int>> edges, int s)
         adjacencyList[edges[i][1]].push_back({edges[i][0], edges[i][2]});
     }
 
-    priority_queue<pair<int,int>> minHeap;
-    minHeap.push({0, s});
-
     vector<int> distance(n + 1, INT_MAX);
+    priority_queue<pair<int,int>> pq;
+
     distance[s] = 0;
+    pq.push({0, s});
 
     vector<int> visited(n + 1);
 
-    while (!minHeap.empty())
+    while (!pq.empty())
     {
-        int currentNode = minHeap.top().second;
-        minHeap.pop();
+        int currentNode = pq.top().second;
+        pq.pop();
 
         if (visited[currentNode])
         {
@@ -83,7 +91,7 @@ vector<int> shortestReach2(int n, vector<vector<int>> edges, int s)
 
         visited[currentNode] = 1;
 
-        for (auto nextEdge : adjacencyList[currentNode])
+        for (const auto nextEdge : adjacencyList[currentNode])
         {
             int nextNode = nextEdge.first;
             int edgeWeight = nextEdge.second;
@@ -91,7 +99,7 @@ vector<int> shortestReach2(int n, vector<vector<int>> edges, int s)
             if (distance[currentNode] + edgeWeight < distance[nextNode])
             {
                 distance[nextNode] = distance[currentNode] + edgeWeight;
-                minHeap.push({-distance[nextNode], nextNode});
+                pq.push({-distance[nextNode], nextNode});
             }
         }
     }
@@ -167,7 +175,6 @@ int main()
 
     return 0;
 }
-
 
 string ltrim(const string &str)
 {
