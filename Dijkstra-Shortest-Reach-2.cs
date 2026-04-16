@@ -25,4 +25,21 @@ class Result
      *  2. 2D_INTEGER_ARRAY edges
      *  3. INTEGER s
      */
+
+    public static List<int> shortestReach(int n, List<List<int>> edges, int s)
+    {
+        var adjacencyList = new List<(int node, int weight)>[n + 1];
+        for (int i = 0; i <= n; i++)
+            adjacencyList[i] = new List<(int, int)>();
+
+        foreach (var edge in edges)
+        {
+            int u = edge[0];
+            int v = edge[1];
+            int w = edge[2];
+
+            adjacencyList[u].Add((v, w));
+            adjacencyList[v].Add((u, w));
+        }
+    }    
 }
