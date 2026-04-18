@@ -41,5 +41,10 @@ class Result
             adjacencyList[u].Add((v, w));
             adjacencyList[v].Add((u, w));
         }
+
+        var distance = new int[n + 1];
+        for (int i = 0; i <= n; i++)
+            distance[i] = int.MaxValue;
+        
     }    
 }
