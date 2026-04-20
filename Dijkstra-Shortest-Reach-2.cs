@@ -46,6 +46,25 @@ class Result
         for (int i = 0; i <= n; i++)
             distance[i] = int.MaxValue;
 
-          var pq = new PriorityQueue<(int node, int dist), int>();
+        var pq = new PriorityQueue<(int node, int dist), int>();
+        
+        while (pq.Count > 0)
+        {
+            var current = pq.Dequeue();
+            int currentNode = current.node;
+            int currentDist = current.dist;
+
+            if (currentDist > distance[currentNode]) continue;
+
+            foreach (var (nextNode, weight) in adjacencyList[currentNode])
+            {
+                if (distance[nextNode] > distance[currentNode] + weight)
+                {
+                    distance[nextNode] = distance[currentNode] + weight;
+                    pq.Enqueue((nextNode, distance[nextNode]), distance[nextNode]);
+                }
+            }
+        }
+
     }    
 }
