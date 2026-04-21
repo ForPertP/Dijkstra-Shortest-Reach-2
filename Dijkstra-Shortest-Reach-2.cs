@@ -12,7 +12,6 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System;
 
-
 class Result
 {
 
@@ -47,7 +46,10 @@ class Result
             distance[i] = int.MaxValue;
 
         var pq = new PriorityQueue<(int node, int dist), int>();
-        
+
+        distance[s] = 0;
+        pq.Enqueue((s, 0), 0);
+
         while (pq.Count > 0)
         {
             var current = pq.Dequeue();
@@ -66,5 +68,50 @@ class Result
             }
         }
 
-    }    
+        var result = new List<int>();
+
+        for (int i = 1; i <= n; i++)
+        {
+            if (i == s) continue;
+            result.Add(distance[i] == int.MaxValue ? -1 : distance[i]);
+        }
+
+        return result;
+    }
+}
+
+
+class Solution
+{
+    public static void Main(string[] args)
+    {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+        int t = Convert.ToInt32(Console.ReadLine().Trim());
+
+        for (int tItr = 0; tItr < t; tItr++)
+        {
+            string[] firstMultipleInput = Console.ReadLine().TrimEnd().Split(' ');
+
+            int n = Convert.ToInt32(firstMultipleInput[0]);
+
+            int m = Convert.ToInt32(firstMultipleInput[1]);
+
+            List<List<int>> edges = new List<List<int>>();
+
+            for (int i = 0; i < m; i++)
+            {
+                edges.Add(Console.ReadLine().TrimEnd().Split(' ').ToList().Select(edgesTemp => Convert.ToInt32(edgesTemp)).ToList());
+            }
+
+            int s = Convert.ToInt32(Console.ReadLine().Trim());
+
+            List<int> result = Result.shortestReach(n, edges, s);
+
+            textWriter.WriteLine(String.Join(" ", result));
+        }
+
+        textWriter.Flush();
+        textWriter.Close();
+    }
 }
