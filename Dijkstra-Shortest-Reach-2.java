@@ -23,8 +23,31 @@ class Result {
      */
 
     public static List<Integer> shortestReach(int n, List<List<Integer>> edges, int s) {
-    // Write your code here
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
 
+        PriorityQueue<Long> pq = new PriorityQueue<>();
+
+        dist[s] = 0;
+        pq.offer(((long)0 << 32) | s);
+
+        while (!pq.isEmpty()) {
+            long cur = pq.poll();
+            int d = (int)(cur >> 32);
+            int node = (int)(cur & 0xffffffffL);
+
+            if (d != dist[node]) continue;
+
+            for (int[] next : adj[node]) {
+                int nextNode = next[0];
+                int newDist = d + next[1];
+
+                if (dist[nextNode] > newDist) {
+                    dist[nextNode] = newDist;
+                    pq.offer(((long)newDist << 32) | nextNode);
+                }
+            }
+        }
     }
 
 }
