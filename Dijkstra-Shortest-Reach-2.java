@@ -10,19 +10,11 @@ import java.util.stream.*;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
+
 class Result {
 
-    /*
-     * Complete the 'shortestReach' function below.
-     *
-     * The function is expected to return an INTEGER_ARRAY.
-     * The function accepts following parameters:
-     *  1. INTEGER n
-     *  2. 2D_INTEGER_ARRAY edges
-     *  3. INTEGER s
-     */
+    public static List<Integer> shortestReach(int n, List<int[]>[] adj, int s) {
 
-    public static List<Integer> shortestReach(int n, List<List<Integer>> edges, int s) {
         int[] dist = new int[n + 1];
         Arrays.fill(dist, Integer.MAX_VALUE);
 
@@ -48,6 +40,58 @@ class Result {
                 }
             }
         }
-    }
 
+        List<Integer> result = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            if (i == s) continue;
+            result.add(dist[i] == Integer.MAX_VALUE ? -1 : dist[i]);
+        }
+
+        return result;
+    }
+}
+
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int t = Integer.parseInt(br.readLine());
+
+        while (t-- > 0) {
+
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int n = Integer.parseInt(st.nextToken());
+            int m = Integer.parseInt(st.nextToken());
+
+            List<int[]>[] adj = (List<int[]>[]) new ArrayList[n + 1];
+            
+            for (int i = 1; i <= n; i++) adj[i] = new ArrayList<>();
+
+            for (int i = 0; i < m; i++) {
+                st = new StringTokenizer(br.readLine());
+                int u = Integer.parseInt(st.nextToken());
+                int v = Integer.parseInt(st.nextToken());
+                int w = Integer.parseInt(st.nextToken());
+
+                adj[u].add(new int[]{v, w});
+                adj[v].add(new int[]{u, w});
+            }
+
+            int s = Integer.parseInt(br.readLine());
+
+            List<Integer> result = Result.shortestReach(n, adj, s);
+
+            StringBuilder sb = new StringBuilder();
+            for (int val : result) {
+                sb.append(val).append(" ");
+            }
+            bw.write(sb.toString().trim());
+            bw.newLine();
+        }
+
+        bw.flush();
+    }
 }
