@@ -22,3 +22,17 @@ process.stdin.on('end', function(): void {
 function readInt(): number {
     return parseInt(inputLines[currentLine++], 10);
 }
+
+
+function main() {
+    const ws: WriteStream = createWriteStream(process.env['OUTPUT_PATH']!);
+    const t = readInt();
+
+    for (let tItr = 0; tItr < t; tItr++) {
+        const n = readInt();
+        const m = readInt();
+        const result = shortestReach(n, m);
+        ws.write(result.join(' ') + '\n');
+    }
+    ws.end();
+}
