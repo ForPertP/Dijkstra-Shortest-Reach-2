@@ -24,6 +24,22 @@ function readInt(): number {
 }
 
 
+class PriorityQueue {
+    private heap: number[][] = [];
+    constructor() {}
+
+    push(val: number[]) {
+        this.heap.push(val);
+        let idx = this.heap.length - 1;
+        while (idx > 0) {
+            let pIdx = (idx - 1) >> 1;
+            if (this.heap[idx][1] >= this.heap[pIdx][1]) break;
+            [this.heap[idx], this.heap[pIdx]] = [this.heap[pIdx], this.heap[idx]];
+            idx = pIdx;
+        }
+    }
+}
+
 function main() {
     const ws: WriteStream = createWriteStream(process.env['OUTPUT_PATH']!);
     const t = readInt();
