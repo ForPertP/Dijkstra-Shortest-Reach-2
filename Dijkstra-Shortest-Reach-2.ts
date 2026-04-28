@@ -38,6 +38,29 @@ class PriorityQueue {
             idx = pIdx;
         }
     }
+
+    pop(): number[] | undefined {
+        if (this.heap.length === 0) return undefined;
+        const top = this.heap[0];
+        const last = this.heap.pop()!;
+        if (this.heap.length > 0) {
+            this.heap[0] = last;
+            let idx = 0;
+            while (true) {
+                let left = (idx << 1) + 1;
+                let right = (idx << 1) + 2;
+                let smallest = idx;
+                if (left < this.heap.length && this.heap[left][1] < this.heap[smallest][1]) smallest = left;
+                if (right < this.heap.length && this.heap[right][1] < this.heap[smallest][1]) smallest = right;
+                if (smallest === idx) break;
+                [this.heap[idx], this.heap[smallest]] = [this.heap[smallest], this.heap[idx]];
+                idx = smallest;
+            }
+        }
+        return top;
+    }
+
+    isEmpty() { return this.heap.length === 0; }
 }
 
 function main() {
