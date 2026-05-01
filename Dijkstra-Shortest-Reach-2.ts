@@ -23,7 +23,6 @@ function readInt(): number {
     return parseInt(inputLines[currentLine++], 10);
 }
 
-
 class PriorityQueue {
     private heap: number[][] = [];
     constructor() {}
@@ -61,6 +60,30 @@ class PriorityQueue {
     }
 
     isEmpty() { return this.heap.length === 0; }
+}
+
+function shortestReach(n: number, m: number): number[] {
+    const adj: Map<number, number>[] = Array.from({ length: n + 1 }, () => new Map());
+
+    for (let i = 0; i < m; i++) {
+        const u = readInt();
+        const v = readInt();
+        const w = readInt();
+        if ((adj[u].get(v) || Infinity) > w) {
+            adj[u].set(v, w);
+            adj[v].set(u, w);
+        }
+    }
+
+  
+    }
+
+    const result: number[] = [];
+    for (let i = 1; i <= n; i++) {
+        if (i === s) continue;
+        result.push(minDists[i] === 4294967295 ? -1 : minDists[i]);
+    }
+    return result;
 }
 
 function main() {
