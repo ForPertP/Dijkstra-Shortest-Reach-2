@@ -75,7 +75,26 @@ function shortestReach(n: number, m: number): number[] {
         }
     }
 
-  
+    const s = readInt();
+    const dists = new Int32Array(n + 1).fill(-1);
+    const minDists = new Uint32Array(n + 1).fill(4294967295); 
+    
+    minDists[s] = 0;
+    const pq = new PriorityQueue();
+    pq.push([s, 0]);
+
+    while (!pq.isEmpty()) {
+        const [u, d] = pq.pop()!;
+        if (d > minDists[u]) continue;
+
+        const neighbors = adj[u];
+        for (const [v, weight] of neighbors) {
+            const newDist = d + weight;
+            if (newDist < minDists[v]) {
+                minDists[v] = newDist;
+                pq.push([v, newDist]);
+            }
+        }
     }
 
     const result: number[] = [];
